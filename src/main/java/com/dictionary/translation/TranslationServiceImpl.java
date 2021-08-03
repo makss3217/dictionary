@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.dictionary.db.DictionaryUpdateService;
 
@@ -15,7 +14,6 @@ import static java.util.stream.Collectors.toList;
 
 @Component
 @AllArgsConstructor(onConstructor_ = @Autowired)
-@Transactional
 class TranslationServiceImpl implements TranslationService {
 
   private final TranslationRepository translationRepository;

@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import static java.util.stream.Collectors.toList;
@@ -19,31 +20,32 @@ import com.dictionary.db.DictionaryEntry;
 import com.dictionary.db.DictionaryInsertionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.AllArgsConstructor;
-
 @Component
-@AllArgsConstructor(onConstructor_ = @Autowired)
 class DictionaryEntryFileLoader implements DictionaryEntryLoader {
 
-  private static final String INIT_DATA_PATH = "/src/main/resources/dictionary.json";
   private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
+  private String initDataPath;
   private DictionaryInsertionService insertionService;
-  
+
+  @Autowired
+  public DictionaryEntryFileLoader(
+      @Value("${init.data.path}") String initDataPath,
+      DictionaryInsertionService insertionService) {
+    this.initDataPath = initDataPath;
+    this.insertionService = insertionService;
+  }
+
   @PostConstruct
-  public void initData() throws  IOException   {
+  public void initData() throws IOException {
     loadData();
   }
 
   @Override
-  public void loadData() throws  IOException  {
-    Map<String, String> entryMap = JSON_MAPPER.readValue(readStringFromFile(createAbsolutePath()), Map.class);
+  public void loadData() throws IOException {
+    Map<String, String> entryMap = JSON_MAPPER.readValue(readStringFromFile(initDataPath), Map.class);
     List<DictionaryEntry> dictionaryEntries = createDictionaryEntries(entryMap);
     insertionService.insert(dictionaryEntries);
-  }
-
-  private String createAbsolutePath() {
-    return System.getProperty("user.dir") + INIT_DATA_PATH;
   }
 
   private String readStringFromFile(String path) throws IOException {

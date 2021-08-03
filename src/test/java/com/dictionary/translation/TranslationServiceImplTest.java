@@ -46,7 +46,6 @@ class TranslationServiceImplTest {
     assertThat(dictionaryUpdateService.getRatingMap().get("word1")).isEqualTo(2);
     assertThat(dictionaryUpdateService.getRatingMap().get("word2")).isEqualTo(1);
     assertThat(dictionaryUpdateService.getRatingMap().get(UNKNWON_HEAD_WORD)).isNull();
-    ;
   }
 
   @Test

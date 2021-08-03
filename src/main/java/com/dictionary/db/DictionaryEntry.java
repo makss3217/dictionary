@@ -3,9 +3,9 @@ package com.dictionary.db;
 import lombok.Value;
 
 @Value
-public class PolishToEnglishTranslation {
+public class DictionaryEntry {
 
   private String headWord;
   
-  private String englishTranslation;
+  private String translation;
 }

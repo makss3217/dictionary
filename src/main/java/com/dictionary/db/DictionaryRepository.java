@@ -4,5 +4,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 @NoRepositoryBean
-public interface EnglishDictionaryRepository extends Repository<EnglishEntryEntity, Long> {
+public interface DictionaryRepository extends Repository<DictionaryEntryEntity, Long> {
 }
